@@ -1,4 +1,4 @@
-// Comandos Gmsh
+// Command Gmsh
 
 -- converter *.geo > *.msh
 
