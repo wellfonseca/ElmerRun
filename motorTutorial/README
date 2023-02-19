@@ -1,6 +1,7 @@
 # Based in tutotial link http://dx.doi.org/10.13140/RG.2.2.18599.75688
 
-// Comandos Gmsh
+=> case_01_No_Mumps 
+
 // Command Gmsh
 
 -- converter *.geo > *.msh
@@ -10,7 +11,7 @@ $ gmsh stator_im.geo -2 -o im_stator.msh
 $ gmsh rotor_im.geo -2 -o rotor_im.msh
 
 
-// Comando Elmer
+// Command Elmer
 
 -- converter *.msh > mesh.*
 
@@ -19,18 +20,29 @@ $ ElmerGrid 14 2 stator_im.msh -2d –autoclean –names
 $ ElmerGrid 14 2 rotor_im.msh -2d -autoclean -names
 
 
--- Unir malhas
+-- Unite meshes
 
 
 $ ElmerGrid 2 2 stator_im in rotor_im -unite -autoclean -names -out motor_im
+
+
+-- Run case_01_No_Mumps
+
+
+$ ElmerSolver case_01_No_Mumps.sif
+
+
+-- After run, open results VTU in folder results with paraview
+
+
+$  
+
 
 -- Paralelo com banda de movimento
 
 $ ElmerGrid 2 2 motor_im -partdual -metis 4 3 -connect 2 3 4 5 7 8
 
 
-test VScode
 
-Test vscode 2
 
 

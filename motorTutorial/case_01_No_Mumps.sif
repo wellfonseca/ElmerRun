@@ -223,7 +223,7 @@ Solver 4
  Exec Solver = after simulation
  Equation = "ResultOutput"
  Procedure = "ResultOutputSolve" "ResultOutputSolver"
- Output File Name = case3_No_Mumps
+ Output File Name = cas_01_No_Mumps
  Output Directory = results
  Save Geometry Ids = Logical True
  Vtu Format = Logical True
