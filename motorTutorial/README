@@ -43,7 +43,7 @@ $ ./Allrun_case_01_no_mumps
 
 ################################################################
 
-=> case_02_mumps 
+=> case_02_Mumps 
 
 # The scientific library MUMPS (for MUltifrontal Massively Parallel Solver) is known worldwide. 
 # It solves large systems of sparse linear equations in a robust and effective way on high performance computers (distributed and shared memory machines, CPU and GPU).
@@ -53,9 +53,47 @@ $ ./Allrun_case_01_no_mumps
 
 $ ElmerSolver case_02_Mumps.sif
 
--- Paralelo com banda de movimento
+-- After run, open results VTU in folder results with paraview
+
+## all steps in shell file Allrun_case_02_mumps  
+## RUN
+$ ./Allrun_case_02_mumps
+
+###########################################################################
+
+=> case_03_No_Mumps_Parallel
+
+
+-- Already with the mesh Run - for 4 cores
+-- Partitioning
 
 $ ElmerGrid 2 2 motor_im -partdual -metis 4 3 -connect 2 3 4 5 7 8
+
+-- Run Parallel
+
+$ mpirun -np 4 ElmerSolver_mpi case_03_No_Mumps_Parallel.sif
+
+-- After run, open results VTU in folder results with paraview
+
+## all steps in shell file Allrun_case_03_no_mumps_parallel  
+## RUN
+$ ./Allrun_case_03_no_mumps_parallel
+
+#########################################################################
+
+=> case_04_Mumps_Parallel
+
+
+-- Already with the mesh Run and Partitioned - for 4 cores
+-- Run Parallel
+
+$ mpirun -np 4 ElmerSolver_mpi case_04_Mumps_Parallel.sif
+
+-- After run, open results VTU in folder results with paraview
+
+## all steps in shell file Allrun_case_04_mumps_parallel  
+## RUN
+$ ./Allrun_case_04_mumps_parallel
 
 
 

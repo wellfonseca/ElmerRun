@@ -1,5 +1,5 @@
-!!!!!!!!!
-!!! Primeiro teste estacionario  !!!!!!!
+!!! no MUMPS !!!
+!!! case steady state parallel!!!
 
 
 Header
@@ -16,8 +16,10 @@ Simulation
  Steady State Max Iterations = 1
  Simulation Type = Steady
 
- Mesh Levels = 4 ##2
- Mesh Keep = 2 ##1
+!!! Refine
+
+ Mesh Levels = 2  
+ Mesh Keep = 1
 
  Use Mesh Names = Logical True
 End
@@ -36,10 +38,8 @@ End
 Material 2
  Name = "Iron"
  INCLUDE el_steel_M800_65A
-!! Relative Permeability = 1000    !!!! Provisório
-
-
 End
+
 !###############################################################################
 !#######################------ Body Force Section ----#######################
 !###############################################################################
@@ -192,15 +192,15 @@ Solver 2
  Procedure = "MagnetoDynamics2D" "MagnetoDynamics2D"
  Nonlinear System Convergence Tolerance = 1.0e-4
  Nonlinear System Max Iterations = 30
- Linear System Solver = Direct
- Linear System Iterative Method = MUMPS
-! Linear System Solver = Iterative
-! Linear System Iterative Method = BicgstabL
-! Linear System Symmetric = True
-! Linear System Max Iterations = 200
-! Linear System Preconditioning = ILU2
-! Linear System Convergence Tolerance = 1e-8
-! Linear System Residual Output = 50
+! Linear System Solver = Direct
+! Linear System Iterative Method = MUMPS
+ Linear System Solver = Iterative
+ Linear System Iterative Method = BicgstabL
+ Linear System Symmetric = True
+ Linear System Max Iterations = 10000           !!200
+ Linear System Preconditioning = ILU2
+ Linear System Convergence Tolerance = 1e-8
+ Linear System Residual Output = 50
 End
 
 Solver 3
@@ -210,22 +210,22 @@ Solver 3
  Procedure = "MagnetoDynamics" "MagnetoDynamicsCalcFields"
  Calculate Current Density = Logical True
  Calculate Magnetic Vector Potential = Logical True
- Linear System Solver = Direct
- Linear System Iterative Method = MUMPS
-! Linear System Solver = Iterative
-! Linear System Iterative Method = BicgstabL
-! Linear System Symmetric = True
-! Linear System Max Iterations = 200
-! Linear System Preconditioning = ILU2
-! Linear System Convergence Tolerance = 1e-8
-! Linear System Residual Output = 50
+! Linear System Solver = Direct
+! Linear System Iterative Method = MUMPS
+ Linear System Solver = Iterative
+ Linear System Iterative Method = BicgstabL
+ Linear System Symmetric = True
+ Linear System Max Iterations = 10000            !!200
+ Linear System Preconditioning = ILU2
+ Linear System Convergence Tolerance = 1e-8
+ Linear System Residual Output = 50
 End
 
 Solver 4
  Exec Solver = after simulation
  Equation = "ResultOutput"
  Procedure = "ResultOutputSolve" "ResultOutputSolver"
- Output File Name = caseMumpsMKL
+ Output File Name = case_03_no_mumps_parallel
  Output Directory = results
  Save Geometry Ids = Logical True
  Vtu Format = Logical True

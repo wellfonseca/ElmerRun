@@ -1,0 +1,30 @@
+#!/bin/sh
+
+### Command Gmsh ###
+
+## converter *.geo > *.msh
+
+gmsh stator_im.geo -2 -o im_stator.msh
+
+gmsh rotor_im.geo -2 -o rotor_im.msh
+
+### Command Elmer ###
+
+## converter *.msh > mesh.*
+
+ElmerGrid 14 2 stator_im.msh -2d –autoclean –names
+
+ElmerGrid 14 2 rotor_im.msh -2d -autoclean -names
+
+## Unite meshes
+
+ElmerGrid 2 2 stator_im in rotor_im -unite -autoclean -names -out motor_im
+
+## Run case_03_No_Mumps_Parallel
+
+ElmerGrid 2 2 motor_im -partdual -metis 4 3 -connect 2 3 4 5 7 8
+
+## Run Parallel
+mpirun -np 4 ElmerSolver_mpi case_04_Mumps_Parallel.sif
+
+#------------------------------------------------------------------------------
