@@ -1,6 +1,5 @@
-!!! ####################### 
-!##### Malha refinada  ####
-
+!!! lib MUMPS !!!
+!!! case steady state!!!
 
 Header
  Mesh DB "motor_im"
@@ -16,8 +15,8 @@ Simulation
  Steady State Max Iterations = 1
  Simulation Type = Steady
 
- Mesh Levels = 2
- Mesh Keep = 1
+ !Mesh Levels = 2
+ !Mesh Keep = 1
 
  Use Mesh Names = Logical True
 End
@@ -225,7 +224,7 @@ Solver 4
  Exec Solver = after simulation
  Equation = "ResultOutput"
  Procedure = "ResultOutputSolve" "ResultOutputSolver"
- Output File Name = case2_Mesh
+ Output File Name = case_02_Mumps
  Output Directory = results
  Save Geometry Ids = Logical True
  Vtu Format = Logical True

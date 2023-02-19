@@ -1,4 +1,6 @@
-!!!!! Static !!!!
+!!! no MUMPS !!!
+
+!!! case steady state!!!
 
 Header
  Mesh DB "motor_im"
