@@ -41,6 +41,17 @@ $ ElmerSolver case_01_No_Mumps.sif
 ## RUN
 $ ./Allrun_case_01_no_mumps
 
+################################################################
+
+=> case_02_mumps 
+
+# The scientific library MUMPS (for MUltifrontal Massively Parallel Solver) is known worldwide. 
+# It solves large systems of sparse linear equations in a robust and effective way on high performance computers (distributed and shared memory machines, CPU and GPU).
+# https://mumps-solver.org
+
+-- Already with the mesh Run
+
+$ ElmerSolver case_02_Mumps.sif
 
 -- Paralelo com banda de movimento
 
