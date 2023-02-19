@@ -34,8 +34,9 @@ $ ElmerSolver case_01_No_Mumps.sif
 
 -- After run, open results VTU in folder results with paraview
 
-
-$  
+## all steps in shell file Allrun_case_01_no_mumps  
+## RUN
+$ ./Allrun_case_01_no_mumps
 
 
 -- Paralelo com banda de movimento
