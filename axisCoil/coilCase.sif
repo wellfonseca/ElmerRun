@@ -1,0 +1,136 @@
+Check Keywords "Warn"
+
+Header
+  Mesh DB "." "coilMesh"
+End
+
+Simulation
+  Max Output Level = 5
+  Coordinate System = "Axi symmetric"
+  Simulation Type = Steady
+  Steady State Max Iterations = 1
+  Output Intervals(1) = 1
+
+  Coordinate Scaling = 39.3701
+End
+
+!! ----------- Material ----------
+
+! Air
+Material 1
+  Name = "Air"
+  Relative Permeability = 1
+  Electric Conductivity = 0
+End
+
+! Copper
+Material 2
+  Name = "Copper"
+  Relative Permeability = 1
+  Electric Conductivity = 58E6	! S/m = 1/(ohm.m)
+End
+
+!! ------------- Body Force ------------------
+
+Body Force 1
+  Name = "CurrentSource"
+
+  Current Density = Real $ 500
+End
+
+
+!------ Skeleton for body section -----
+Body 1
+  Name = coil
+  Equation = 1
+  Material = 2
+  Body Force = 1
+End
+
+Body 2
+  Name = air
+  Equation = 1
+  Material = 1
+End
+
+!! -------- Solvers -----------------
+
+!!! System Equations
+Equation 1 :: Active Solvers(3) = 1 2 3 
+
+!!! AV solver
+Solver 1
+  Exec Solver = Always
+  Equation = MagetoDynamics2D
+  Procedure = "MagnetoDynamics2D" "MagnetoDynamics2D"
+
+  Variable = "A"
+
+  Nonlinear System Convergence Tolerance = 1.0E-6
+  Nonlinear System Max Iterations = 30
+  Nonlinear System Min Iterations = 1
+  Nonlinear System Relaxation Factor = 1.0
+  Nonlinear System Newton After Iterations = 7
+
+  !!! Direct Solver of Linear System
+  !=========================================================================
+  Linear System Solver = Direct
+  Linear System Direct Method = UMFPACK
+End
+
+!!! Field Solver
+Solver 2
+  Exec Solver = Always
+  Equation = CalcFields
+  Procedure = "MagnetoDynamics" "MagnetoDynamicsCalcFields"
+
+  Potential Variable = "A"
+
+  Nonlinear System Convergence Tolerance = 1.0E-6
+  Nonlinear System Max Iterations = 30
+  Nonlinear System Min Iterations = 1
+  Nonlinear System Relaxation Factor = 1.0
+  Nonlinear System Newton After Iterations = 7
+
+  !!! Direct Solver of Linear System
+  !=========================================================================
+  Linear System Solver = Direct
+  Linear System Direct Method = UMFPACK
+
+  Calculate Magnetic Vector Potential = logical True
+  !Calculate Electric Field = logical True
+  Calculate Magnetic Field Strength = logical True
+  Calculate Current Density = logical True
+  !Calculate Joule Heating = logical true
+  Calculate Nodal Forces = logical true
+End
+
+!!! Save the fields to a file
+Solver 3
+  Exec Solver = After Timestep
+  Equation = ResultOutput
+  Procedure = "ResultOutputSolve" "ResultOutputSolver"
+
+  Output File Name = "coilCase"
+  Output Directory = "results"
+  
+  ! VTU format for ParaView with faces' IDs
+  Save Geometry Ids = logical True
+  Vtu Format = logical True
+  Binary Output = logical True
+  Single Precision = logical True
+End
+
+!------ Skeleton for boundary section -----
+Boundary Condition 1
+  Name = axis
+  A = real 0.0
+End
+
+Boundary Condition 2
+  Name = limite
+  Infinity BC = logical True
+End
+
+
+
